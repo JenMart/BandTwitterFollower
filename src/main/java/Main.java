@@ -2,6 +2,7 @@ import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by jensinamart on 12/8/15.
@@ -9,27 +10,56 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 //        StreamGUI streamGUI = new StreamGUI();
-        TimelineFeed timeline = new TimelineFeed();
+        //////////////////////////////////////////Important code
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(timeline.getCkey())
-                .setOAuthConsumerSecret(timeline.getCsecret())
-                .setOAuthAccessToken(timeline.getAtoken())
-                .setOAuthAccessTokenSecret(timeline.getAsecret());
+                .setOAuthConsumerKey(AuthData.getCkey())
+                .setOAuthConsumerSecret(AuthData.getCsecret())
+                .setOAuthAccessToken(AuthData.getAtoken())
+                .setOAuthAccessTokenSecret(AuthData.getAsecret());
         TwitterFactory factory = new TwitterFactory(cb.build());
         Twitter twitter = factory.getInstance();
+        //////////////////////////////////////////Important code
+        TimelineFeed timeLine = new TimelineFeed();
+        SearchTweets searchTweets = new SearchTweets();
+        PostTweet postTweet = new PostTweet();
+        AddRemoveFriend addRemoveFriend = new AddRemoveFriend();
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your choice below: ");
+        System.out.println("_________________________________ ");
+        System.out.println("1. View Timeline \n2. Search for public tweet \n3. Post to your wall" +
+                " \n4. Add friend \n5. Remove friend");
 
+        int input = scanner.nextInt();
 
-        ////////////////////////////////// How to add to friends
-        try {
-            twitter.destroyFriendship("@pcgamer");
-            System.out.print("removed @pcgamer!");
-        } catch (TwitterException e) {
-            e.printStackTrace();
+        switch (input){
+            case 1: timeLine.PullTimelines(twitter);
+                break;
+            case 2: searchTweets.SearchTwts(twitter);
+                break;
+            case 3: postTweet.postTweet(twitter);
+                break;
+            case 4: addRemoveFriend.addFriend(twitter);
+                break;
+            case 5: addRemoveFriend.removeFriend(twitter);
+                break;
+            default:
+                System.out.println("Invalid entry.");
+                break;
         }
+//        TimelineFeed timeLine = new TimelineFeed();
+//        timeLine.PullTimelines(twitter);
 
-        ////////////////////////////////// How to search for something
+        ////////////////////////////////// How to add/remove to friends *
+//        try {
+//            twitter.destroyFriendship("@pcgamer"); //remove
+//            twitter.createFriendship("@pcgamer"); //add
+//        } catch (TwitterException e) {
+//            e.printStackTrace();
+//        }
+//
+        ////////////////////////////////// How to search for something*
 //        Query query = new Query("potato");
 //        QueryResult result = null;
 //        try {
@@ -41,19 +71,20 @@ public class Main {
 //            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
 //        }
 
-            ////////////////////////////////// How to view timeline
+            ////////////////////////////////// How to view timeLine*
+//        List<Status> statuses = null;
 //        try {
-////            Twitter twitter = TwitterFactory.getSingleton();
-//            TwitterFactory factory = new TwitterFactory(cb.build());
-//            Twitter twitter = factory.getInstance();
-//            List<Status> statuses = twitter.getHomeTimeline();
-//            System.out.println("Showing home timeline.");
+//            statuses = twitter.getHomeTimeline();
+//        } catch (TwitterException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Showing home timeLine.");
 //            for (Status status : statuses) {
 //                System.out.println(status.getUser().getName() + ":" +
 //                        status.getText());
 //            }
 
-            ////////////////////////////////// How to post tweets
+            ////////////////////////////////// How to post tweets*
 //            TwitterFactory factory = new TwitterFactory(cb.build());
 //            Twitter twitter = factory.getInstance();
 //
