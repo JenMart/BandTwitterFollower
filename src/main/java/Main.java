@@ -7,6 +7,7 @@ import java.util.Scanner;
 /**
  * Created by jensinamart on 12/8/15.
  */
+//Database called TWEETS. TWTS VARCHAR(255),USERS VARCHAR(255), HASTAG VARCHAR(255), DATEPOSTED DATETIME
 public class Main {
     public static void main(String[] args) {
 //        StreamGUI streamGUI = new StreamGUI();
