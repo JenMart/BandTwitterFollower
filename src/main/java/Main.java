@@ -21,7 +21,8 @@ public class Main {
         TwitterFactory factory = new TwitterFactory(cb.build());
         Twitter twitter = factory.getInstance();
         //////////////////////////////////////////Important code
-        TimelineFeed timeLine = new TimelineFeed();
+
+        TimelineFeed timeLine = new TimelineFeed(); //Initializing other classes
         SearchTweets searchTweets = new SearchTweets();
         PostTweet postTweet = new PostTweet();
         AddRemoveFriend addRemoveFriend = new AddRemoveFriend();
@@ -33,7 +34,7 @@ public class Main {
                 " \n4. Add friend \n5. Remove friend");
 
         int input = scanner.nextInt();
-
+        //Switch statement to go to ther classes
         switch (input){
             case 1: timeLine.PullTimelines(twitter);
                 break;
@@ -49,6 +50,7 @@ public class Main {
                 System.out.println("Invalid entry.");
                 break;
         }
+
 //        TimelineFeed timeLine = new TimelineFeed();
 //        timeLine.PullTimelines(twitter);
 
