@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class DBase {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -47,33 +47,6 @@ public class DBase {
                 System.out.println("Created tables");
             }
 
-//            //HASHTAGS table used to store hashtags and their hashtag ID's
-//            String createHash = "CREATE TABLE HASHTAGS(HASHID BIGINT NOT NULL, HASHTAGS VHARCHAR(140) NOT NULL, PRIMARY KEY(HASHID))";
-//            statement.executeUpdate(createHash);
-//
-//            //TWEETHASH is a table that connects the above tables into a many/many relationship
-//            String createTwtHash = "CREATE TABLE TWEETHASH(ID BIGINT NOT NULL AUTO_INCREMENT, TWITID BIGINT NOT NULL," +
-//                    " HASHID BIGINT NOT NULL, PRIMARY KEY(ID), FOREIGN KEY(HASHID), FOREIGN KEY(TWITID))";
-//            statement.executeUpdate(createTwtHash);
-
-
-
-//            String prepStatInsert = "INSERT INTO TWEETS VALUES ( ?, ?, ?, ?)", (status.getText());
-            //TWTID BIGINT, TWT VARCHAR(140), USERS VARCHAR(15),  DATEPOSTED DATETIME
-//            psInsert = conn.prepareStatement(prepStatInsert);
-//            allStatements.add(psInsert);
-//status.getUser().getScreenName() + ":" + status.getText()
-//            for (Status status : Main.result.getTweets()){
-//                String add = "INSERT INTO TWEETS VALUES ("+ status.getId() + "," + status.getText()
-//                        + "," + status.getUser().getScreenName() + "," + status.getCreatedAt() +")";
-//                statement.executeUpdate(add);
-//                String prepStatInsert = "INSERT INTO TWEETS VALUES ( ?, ?, ?, ?)";
-//                System.out.println(status.getText());
-//                psInsert.setInt(status.getText());
-//                psInsert.setDate(2, Date.valueOf("2014-04-05"));
-//                psInsert.setDouble(3, 5.00);
-//                psInsert.executeUpdate();
-//            }
 
         } catch (SQLException se) {
             se.printStackTrace();
@@ -89,9 +62,8 @@ public class DBase {
         }
 
     }
-
+    ///////////////////////////////////Returns tweets from table
     public List readTwtTable(){
-
         Connection conn = null;
         Statement statement = null;
         List<TweetDAO> tweets = new ArrayList<TweetDAO>();
@@ -99,8 +71,8 @@ public class DBase {
             String search = "SELECT * FROM TWEETS ";
             conn = createConn();
             statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(search);
-            while (resultSet.next()){
+            ResultSet resultSet = statement.executeQuery(search); //Takes data from table and turns to result set
+            while (resultSet.next()){ //breaks up data for Tweet DAO list
                 TweetDAO tweet = new TweetDAO();
                 tweet.id = resultSet.getLong("TWTID");
                 tweet.msg = resultSet.getString("TWT");
@@ -108,7 +80,6 @@ public class DBase {
                 tweet.postDate = resultSet.getDate("DATEPOSTED");
                 tweets.add(tweet);
             }
-
             return tweets;
         }catch (SQLException e){
             System.err.println(e.getMessage());
@@ -122,6 +93,7 @@ public class DBase {
         }
         return null;
     }
+    ///////////////////////////////////writes tweets from table
     public void writeTwtTable(){
         Connection conn = null;
         Statement statement = null;
@@ -129,7 +101,8 @@ public class DBase {
             conn = createConn();
             statement = conn.createStatement();
             for (Status status : Main.result.getTweets()) {
-                if (checkTwtTable(String.valueOf(status.getId()))){
+                if (checkTwtTable(String.valueOf(status.getId()))){ //checks to see if tweet is on table
+                    //If not, writes to TWEETS table
                     String add = "INSERT INTO TWEETS VALUES (" + status.getId() + "," + status.getText()
                             + "," + status.getUser().getScreenName() + "," + status.getCreatedAt() + ")";
                     statement.executeUpdate(add);
@@ -146,6 +119,7 @@ public class DBase {
             } catch (SQLException se) {}
         }
     }
+    ///////////////////////////////////Confirm if tweet already exists on table
     public Boolean checkTwtTable(String id){
         Connection conn = null;
         Statement statement = null;
@@ -153,9 +127,10 @@ public class DBase {
         try {
             conn = createConn();
             statement = conn.createStatement();
-
-            String check = "SELECT TWTID FROM TWEET WHERE TWTID IN("+ id +")";
+            //Tries to pull data from table based on info passed from writeTwtTable
+            String check = "SELECT TWTID FROM TWEETS WHERE TWTID IN("+ id +")";
             ResultSet resultSet = statement.executeQuery(check);
+            //If result set is empty, returns true.
             if(resultSet.next()){
                 tweetExists = true;
             }

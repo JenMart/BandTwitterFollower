@@ -2,19 +2,23 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="SavedGui">
   <grid id="27dc6" binding="rootPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="614" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="fcce3" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+      <component id="fcce3" class="javax.swing.JTextArea" binding="savedTextArea">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
           <gridbag weightx="0.0" weighty="0.0" ipadx="300"/>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+          <lineWrap value="false"/>
+          <wrapStyleWord value="true"/>
+        </properties>
       </component>
       <hspacer id="e3bbd">
         <constraints>

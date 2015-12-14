@@ -9,5 +9,22 @@ public class TweetDAO {
     long id;
     String msg;
     String user;
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     Date postDate;
 }
