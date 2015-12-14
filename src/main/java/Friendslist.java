@@ -1,14 +1,18 @@
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.User;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by jensinamart on 12/8/15.
  */
-public class AddRemoveFriend {
+public class Friendslist {
     Scanner scanner = new Scanner(System.in);
     protected void addFriend(Twitter twitter){
+        dislayFreinds(twitter);
+
         System.out.println("Enter name of account to be added");
         String input = scanner.next();
                 try {
@@ -19,6 +23,7 @@ public class AddRemoveFriend {
         }
     }
     protected void removeFriend(Twitter twitter){
+        dislayFreinds(twitter);
         System.out.println("Enter name of account to be removed");
         String input = scanner.next();
         try {
@@ -27,5 +32,16 @@ public class AddRemoveFriend {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+    }
+    public List dislayFreinds(Twitter twitter){
+        try {
+            Main.usrs = twitter.getFollowersList(twitter.getId(), -1);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+//        for(User user : Main.usrs){
+//            System.out.println(user.getScreenName());
+//        }
+        return null;
     }
 }

@@ -8,21 +8,21 @@ import java.util.Scanner;
  */
 public class SearchTweets {
 
-    protected void SearchTwts(Twitter twitter){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter search criteria:");
-        String input = scanner.next();
+    protected void SearchTwts(Twitter twitter, String findString){
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter search criteria:");
+//        String input = scanner.next();
 
-        Query query = new Query(input);
-        QueryResult result = null;
+        Query query = new Query(findString);
+//        QueryResult result = null;
         try {
-            result = twitter.search(query);
+            Main.result = twitter.search(query);
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-        System.out.println("Search results for " + input + ":");
-        for (Status status : result.getTweets()) {
-            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
+//        System.out.println("Search results for " + input + ":");
+//        for (Status status : Main.result.getTweets()) {
+//            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+//        }
     }
 }

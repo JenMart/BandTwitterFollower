@@ -9,47 +9,58 @@ import java.util.Scanner;
  */
 //Database called TWEETS. TWTS VARCHAR(255),USERS VARCHAR(255), HASTAG VARCHAR(255), DATEPOSTED DATETIME
 public class Main {
+    public static List<Status> statuses = null;
+    public static List<User> usrs = null;
+    public static QueryResult result = null;
+    public static DBase dBase;
+//    public static ConfigurationBuilder cb = new ConfigurationBuilder();
+//    public static TwitterFactory factory = new TwitterFactory(cb.build());
+//    public static Twitter twitter = factory.getInstance();
+
     public static void main(String[] args) {
-//        StreamGUI streamGUI = new StreamGUI();
-        //////////////////////////////////////////Important code
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(AuthData.getCkey())
-                .setOAuthConsumerSecret(AuthData.getCsecret())
-                .setOAuthAccessToken(AuthData.getAtoken())
-                .setOAuthAccessTokenSecret(AuthData.getAsecret());
-        TwitterFactory factory = new TwitterFactory(cb.build());
-        Twitter twitter = factory.getInstance();
-        //////////////////////////////////////////Important code
+        StreamGUI streamGUI = new StreamGUI();
+        dBase = new DBase();
+        dBase.initDB();
 
-        TimelineFeed timeLine = new TimelineFeed(); //Initializing other classes
-        SearchTweets searchTweets = new SearchTweets();
-        PostTweet postTweet = new PostTweet();
-        AddRemoveFriend addRemoveFriend = new AddRemoveFriend();
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your choice below: ");
-        System.out.println("_________________________________ ");
-        System.out.println("1. View Timeline \n2. Search for public tweet \n3. Post to your wall" +
-                " \n4. Add friend \n5. Remove friend");
-
-        int input = scanner.nextInt();
-        //Switch statement to go to ther classes
-        switch (input){
-            case 1: timeLine.PullTimelines(twitter);
-                break;
-            case 2: searchTweets.SearchTwts(twitter);
-                break;
-            case 3: postTweet.postTweet(twitter);
-                break;
-            case 4: addRemoveFriend.addFriend(twitter);
-                break;
-            case 5: addRemoveFriend.removeFriend(twitter);
-                break;
-            default:
-                System.out.println("Invalid entry.");
-                break;
-        }
+//        //////////////////////////////////////////Important code
+//        ConfigurationBuilder cb = new ConfigurationBuilder();
+//        cb.setDebugEnabled(true)
+//                .setOAuthConsumerKey(AuthData.getCkey())
+//                .setOAuthConsumerSecret(AuthData.getCsecret())
+//                .setOAuthAccessToken(AuthData.getAtoken())
+//                .setOAuthAccessTokenSecret(AuthData.getAsecret());
+//        TwitterFactory factory = new TwitterFactory(cb.build());
+//        Twitter twitter = factory.getInstance();
+//        //////////////////////////////////////////Important code
+//
+//        TimelineFeed timeLine = new TimelineFeed(); //Initializing other classes
+//        SearchTweets searchTweets = new SearchTweets();
+//        PostTweet postTweet = new PostTweet();
+//        Friendslist friendslist = new Friendslist();
+//
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter your choice below: ");
+//        System.out.println("_________________________________ ");
+//        System.out.println("1. View Timeline \n2. Search for public tweet \n3. Post to your wall" +
+//                " \n4. Add friend \n5. Remove friend");
+//
+//        int input = scanner.nextInt();
+//        //Switch statement to go to ther classes
+//        switch (input){
+//            case 1: timeLine.PullTimelines(twitter);
+//                break;
+////            case 2: searchTweets.SearchTwts(twitter);
+////                break;
+//            case 3: postTweet.postTweet(twitter);
+//                break;
+//            case 4: friendslist.addFriend(twitter);
+//                break;
+//            case 5: friendslist.removeFriend(twitter);
+//                break;
+//            default:
+//                System.out.println("Invalid entry.");
+//                break;
+//        }
 
 //        TimelineFeed timeLine = new TimelineFeed();
 //        timeLine.PullTimelines(twitter);
