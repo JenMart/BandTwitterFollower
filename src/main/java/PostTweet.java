@@ -10,7 +10,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class PostTweet {
 
     protected void postTweet(Twitter twitter){
-
+    //No longer needed. Left in because it's cool.
     try{
         System.out.println(twitter.getScreenName());
             Status status = twitter.updateStatus("TESTING FROM JAVA");

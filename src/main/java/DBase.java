@@ -3,10 +3,10 @@
  */
 import twitter4j.Status;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 
 public class DBase {
@@ -14,6 +14,8 @@ public class DBase {
     static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test";
     static final String USER = "jensinamart"; //TODO replace with your username
     static final String PASSWORD = "password"; //TODO replace with your password
+
+    public static List<TweetDAO> tweets = null;
     private Connection createConn() throws SQLException{
         return DriverManager.getConnection(DB_CONNECTION_URL, USER, PASSWORD);
     }
@@ -63,24 +65,33 @@ public class DBase {
 
     }
     ///////////////////////////////////Returns tweets from table
-    public List readTwtTable(){
+    public void readTwtTable(){
         Connection conn = null;
         Statement statement = null;
-        List<TweetDAO> tweets = new ArrayList<TweetDAO>();
+        tweets = new ArrayList<TweetDAO>();
         try {
             String search = "SELECT * FROM TWEETS ";
             conn = createConn();
             statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(search); //Takes data from table and turns to result set
             while (resultSet.next()){ //breaks up data for Tweet DAO list
+//            for (ResultSet results : resultSet){
                 TweetDAO tweet = new TweetDAO();
                 tweet.id = resultSet.getLong("TWTID");
+                System.out.println("pip");
                 tweet.msg = resultSet.getString("TWT");
                 tweet.user = resultSet.getString("USER");
-                tweet.postDate = resultSet.getDate("DATEPOSTED");
+                //removed date posted from DAO due to unresolvable errors
+                //will keep dateposted in DB as a way to organize
+//                tweet.postDate = resultSet.getDate("DATEPOSTED");
+
+
+
+
                 tweets.add(tweet);
             }
-            return tweets;
+
+//            return tweets;
         }catch (SQLException e){
             System.err.println(e.getMessage());
         }finally {
@@ -91,7 +102,7 @@ public class DBase {
                 conn.close();
             } catch (SQLException se) {}
         }
-        return null;
+//        return null;
     }
     ///////////////////////////////////writes tweets from table
     public void writeTwtTable(){
@@ -100,13 +111,27 @@ public class DBase {
         try {
             conn = createConn();
             statement = conn.createStatement();
+            PreparedStatement prep = null;
+            String addTweets = "INSERT INTO TWEETS VALUES (?,?,?,?)";
+            prep = conn.prepareStatement(addTweets);
             for (Status status : Main.result.getTweets()) {
-                if (checkTwtTable(String.valueOf(status.getId()))){ //checks to see if tweet is on table
+                if (!checkTwtTable(String.valueOf(status.getId()))){ //checks to see if tweet is on table
                     //If not, writes to TWEETS table
-                    String add = "INSERT INTO TWEETS VALUES (" + status.getId() + "," + status.getText()
-                            + "," + status.getUser().getScreenName() + "," + status.getCreatedAt() + ")";
-                    statement.executeUpdate(add);
+                    prep.setLong(1,status.getId());
+                    prep.setString(2,status.getText());
+                    prep.setString(3,status.getUser().getScreenName());
+                    prep.setString(4, String.valueOf(status.getCreatedAt()));
+                    prep.executeUpdate();
+//                    conn.commit();
+
+//                    String add = "INSERT INTO TWEETS VALUES (" + status.getId() + "," + status.getText()
+//                            + "," + status.getUser() + "," + status.getCreatedAt() + ")";
+//                    prep = conn.prepareStatement(add);
+//                    System.out.println(add);
+//                    statement.executeUpdate(add);
+                    System.out.print("yes");
                 }
+                System.out.print("no");
             }
         }catch (SQLException e){
             System.err.println(e.getMessage());

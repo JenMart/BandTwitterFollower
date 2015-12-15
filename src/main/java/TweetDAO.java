@@ -3,16 +3,19 @@ import java.util.Date;
 /**
  * Created by jensinamart on 12/9/15.
  */
-public class TweetDAO {
-    //TWTID BIGINT NOT NULL PRIMARY KEY, TWT VARCHAR(140)," +
-    //"USER VARCHAR(15) NOT NULL, DATEPOSTED DATETIME NOT NULL
+public class TweetDAO { //Holds data to be implemented in a list.
     long id;
     String msg;
     String user;
-
-    public Date getPostDate() {
-        return postDate;
-    }
+//    Date postDate;
+//
+//    public Date getPostDate() {
+//        return postDate;
+//    }
+//    String postDate;
+//    public String getPostDate() {
+//        return postDate;
+//    }
 
     public String getMsg() {
         return msg;
@@ -26,5 +29,5 @@ public class TweetDAO {
         return id;
     }
 
-    Date postDate;
+
 }

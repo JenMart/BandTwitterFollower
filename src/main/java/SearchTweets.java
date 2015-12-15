@@ -9,20 +9,12 @@ import java.util.Scanner;
 public class SearchTweets {
 
     protected void SearchTwts(Twitter twitter, String findString){
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter search criteria:");
-//        String input = scanner.next();
-
-        Query query = new Query(findString);
-//        QueryResult result = null;
+        //Searched for requested results with the word 'concert' added in.
+        Query query = new Query(findString + " concert");
         try {
             Main.result = twitter.search(query);
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-//        System.out.println("Search results for " + input + ":");
-//        for (Status status : Main.result.getTweets()) {
-//            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-//        }
     }
 }

@@ -12,10 +12,6 @@ public class Main {
     public static List<User> usrs = null;
     public static QueryResult result = null;
     public static DBase dBase;
-//    public static ConfigurationBuilder cb = new ConfigurationBuilder();
-//    public static TwitterFactory factory = new TwitterFactory(cb.build());
-//    public static Twitter twitter = factory.getInstance();
-
     public static void main(String[] args) {
         StreamGUI streamGUI = new StreamGUI(); //Starts up GUI
         dBase = new DBase();

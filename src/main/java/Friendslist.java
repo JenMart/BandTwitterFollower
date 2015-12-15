@@ -9,6 +9,19 @@ import java.util.Scanner;
  * Created by jensinamart on 12/8/15.
  */
 public class Friendslist {
+
+
+    public List dislayFreinds(Twitter twitter){
+        try { //Calls names of all friends.
+            Main.usrs = twitter.getFollowersList(twitter.getId(), -1);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    ///////////////Unused. Left in as example/////////////////
     Scanner scanner = new Scanner(System.in);
     protected void addFriend(Twitter twitter){
         dislayFreinds(twitter);
@@ -32,16 +45,5 @@ public class Friendslist {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-    }
-    public List dislayFreinds(Twitter twitter){
-        try {
-            Main.usrs = twitter.getFollowersList(twitter.getId(), -1);
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-//        for(User user : Main.usrs){
-//            System.out.println(user.getScreenName());
-//        }
-        return null;
     }
 }
